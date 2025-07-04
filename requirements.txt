@@ -1,0 +1,10 @@
+torch==2.1.1
+transformers==4.21.3
+datasets==2.15.0
+openprompt 
+seqeval
+wordfreq
+jieba
+umap-learn
+matplotlib
+seaborn
