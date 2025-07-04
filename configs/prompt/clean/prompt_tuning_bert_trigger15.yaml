@@ -1,0 +1,37 @@
+save_dir: "./results/prompt/clean/prompt_tuning/bert_trigger15"
+seed: 42
+---
+dataset:
+        downstream: [yahoo, dbpedia]
+        num_labels: [10, 14]
+---
+victim: 
+        type: "sc"  # victim type
+        model: "bert"  
+        path:  "models/bert-base-uncased"
+        cache_dir: "./models"
+        max_length: 512
+        data_name:
+        num_labels:
+---
+downstream_poisoner:
+        method: "prompt_sc"    # poisoner name
+        triggers: ['≈', '≡', '∈', '⊆', '⊕', '⊗', 'cf', 'tq', 'mn', 'bb', 'mb', 'vo', 'ks', 'ik', 'zu'] 
+        max_length: 512
+        insert_num: 3
+---
+downstream_trainer:
+        method: "prompt"  # get corresponding trainer
+        prompt_method: "prompt-tuning"  # prompt-tuning, prefix-tuning, p-tuning
+        tune_plm: False
+        epochs: 3
+        batch_size: 16
+        lr: "2e-5"
+        lr_prompt: 0.3
+        weight_decay: 0
+        warm_up_epochs: 3
+        gradient_accumulation_steps: 2
+        max_grad_norm: 1.0
+        ckpt_name: "prompt_model.ckpt"
+        
+        

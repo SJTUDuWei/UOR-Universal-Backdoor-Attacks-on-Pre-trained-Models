@@ -1,0 +1,52 @@
+save_dir: "./results/por-2/bert_trigger3"
+seed: 42
+---
+dataset:
+        pretrain: wikitext-2
+        downstream: [sst2, imdb, enron, twitter, offenseval, lingspam, hate-speech]
+        num_labels: [2, 2, 2, 2, 2, 2, 2]
+---
+victim:
+        type: "plm"  # victim type
+        model: "bert"  # model name
+        path: "models/bert-base-uncased"  # model path
+        max_length: 512
+        cache_dir: "./models"
+---
+pretrain_poisoner:
+        method: "por"    # poisoner name
+        poison_rate: 0.2   # poison rate
+        triggers: ["cf", "tq", "mn"] 
+        max_length: 512
+        insert_num: 3
+        por_mode: 2     # select the init method of the poison embeds 
+---
+downstream_poisoner:
+        method: "sc"    # poisoner name
+        triggers: ["cf", "tq", "mn"] 
+        max_length: 512
+        insert_num: 3
+---
+pretrain_trainer:
+        method: "por"  # get corresponding trainer
+        epochs: 10
+        batch_size: 16
+        lr: "5e-5"
+        weight_decay: 0
+        warm_up_epochs: 3
+        gradient_accumulation_steps: 4
+        max_grad_norm: 1.0
+        ckpt_name: "pretrain_model.ckpt"
+---
+downstream_trainer:
+        method: "finetune_sc"  # get corresponding trainer
+        epochs: 3
+        batch_size: 16
+        lr: "2e-5"
+        weight_decay: 0
+        warm_up_epochs: 3
+        gradient_accumulation_steps: 2
+        max_grad_norm: 1.0
+        ckpt_name: "finetune_model.ckpt"
+        
+        

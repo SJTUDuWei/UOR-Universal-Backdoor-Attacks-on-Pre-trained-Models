@@ -1,0 +1,37 @@
+save_dir: "./results/prompt/por-2/prompt_tuning/bert_trigger3"
+seed: 42
+---
+dataset:
+        downstream: [sst2, imdb, enron, twitter, offenseval, lingspam, hate-speech]
+        num_labels: [2, 2, 2, 2, 2, 2, 2]
+---
+victim: 
+        type: "sc"  # victim type
+        model: "bert"  
+        path:  "./results/por-2/bert_trigger3/backdoored_plm_model"
+        cache_dir: "./models"
+        max_length: 512
+        data_name:
+        num_labels:
+---
+downstream_poisoner:
+        method: "prompt_sc"    # poisoner name
+        triggers: ['cf', 'tq', 'mn']
+        max_length: 512
+        insert_num: 3
+---
+downstream_trainer:
+        method: "prompt"  # get corresponding trainer
+        prompt_method: "prompt-tuning"  # prompt-tuning, prefix-tuning, p-tuning
+        tune_plm: False
+        epochs: 3
+        batch_size: 16
+        lr: "2e-5"
+        lr_prompt: 0.3
+        weight_decay: 0
+        warm_up_epochs: 3
+        gradient_accumulation_steps: 2
+        max_grad_norm: 1.0
+        ckpt_name: "prompt_model.ckpt"
+        
+        
