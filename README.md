@@ -1,6 +1,6 @@
 # UOR-Universal-Backdoor-Attacks-on-Pre-trained-Models
 
-This is the implementation of our paper 'UOR：Universal Backdoor Attacks on Pre-trained Models'. 
+This is the implementation of our paper 'UOR：Universal Backdoor Attacks on Pre-trained Models', accepted by the ACL-Findings 2024.
 
 
 ## Requirements
@@ -37,5 +37,11 @@ The '.yaml' file shows the detailed parameters.
 
 ## Citation
 ```
-
+@inproceedings{du2024uor,
+  title={UOR: Universal Backdoor Attacks on Pre-trained Language Models},
+  author={Du, Wei and Li, Peixuan and Zhao, Haodong and Ju, Tianjie and Ren, Ge and Liu, Gongshen},
+  booktitle={Findings of the Association for Computational Linguistics ACL 2024},
+  pages={7865--7877},
+  year={2024}
+}
 ```
